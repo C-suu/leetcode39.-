@@ -3,7 +3,6 @@
 
 <img width="1124" height="1145" alt="image" src="https://github.com/user-attachments/assets/d73c50ea-78b5-41b3-ae0b-243d5c189fac" />
 
-按照既定的详细拆解模式，针对这道经典的“组合总和”问题及其极简的回溯解法，进行全面的深度剖析。
 
 ### （1）题目意思与生僻概念解释
 
