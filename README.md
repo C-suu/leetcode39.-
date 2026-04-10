@@ -32,13 +32,54 @@
 
 ---
 
+candidates = sorted(candidates)这个可以写成candidates.sort()吗？两个函数的区别是啥？
+
+这两个函数虽然都能完成排序，但在底层逻辑和内存开销上有显著的区别。总结来说就是：**一个是“原地整容”，一个是“克隆后整容”。**
+
+直接写一句 **`candidates.sort()`**，既干净利落，又省了内存
+
+### 核心区别对比
+
+| 特性 | `candidates.sort()` (列表方法) | `sorted(candidates)` (内置函数) |
+| :--- | :--- | :--- |
+| **执行方式** | **原地修改 (In-place)**。直接把原来的列表重新排列。 | **生成新对象**。保持原列表不变，克隆一份排好序的新列表。 |
+| **返回值** | 返回 `None`。 | 返回一个新的、排好序的列表。 |
+| **内存开销** | **极小**。因为没有创建新列表。 | **较大**。需要为新生成的列表开辟一块新的内存空间。 |
+| **适用范围** | **只能用于列表 (list)**。它是列表的专属方法。 | **适用于所有可迭代对象** (如元组 tuple、字符串 str、字典 dict 的键等)。 |
+
+---
+
+### 具体代码演示
+
+**1. 使用 `candidates.sort()`**
+```python
+nums = [3, 1, 2]
+res = nums.sort()  
+
+print(nums)  # 输出: [1, 2, 3] (原列表被修改了)
+print(res)   # 输出: None (没有返回值)
+```
+*注意：千万不能写成 `nums = nums.sort()`，这会让 `nums` 变成 `None`！*
+
+**2. 使用 `sorted(candidates)`**
+```python
+nums = [3, 1, 2]
+res = sorted(nums) 
+
+print(nums)  # 输出: [3, 1, 2] (原列表毫发无损)
+print(res)   # 输出: [1, 2, 3] (生成了一个全新的列表)
+```
+
+---
+
 ### （3）带有注释的代码框
 
 ```python
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         # 1. 预处理：对数组进行升序排序，为后续的“提前剪枝”做准备
-        candidates = sorted(candidates)
+        candidates.sort()
+        # candidates = sorted(candidates)
         # 2. 初始化全局结果列表，用于存放所有符合条件的组合
         ans = []
         # 3. 定义深度优先搜索（回溯）函数
