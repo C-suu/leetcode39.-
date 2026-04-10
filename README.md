@@ -78,8 +78,7 @@ print(res)   # 输出: [1, 2, 3] (生成了一个全新的列表)
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         # 1. 预处理：对数组进行升序排序，为后续的“提前剪枝”做准备
-        candidates.sort()
-        # candidates = sorted(candidates)
+        candidates = sorted(candidates)
         # 2. 初始化全局结果列表，用于存放所有符合条件的组合
         ans = []
         # 3. 定义深度优先搜索（回溯）函数
@@ -89,17 +88,16 @@ class Solution:
         def find(s, use, remain):
             # 从起始索引 s 开始，向后遍历候选数字
             for i in range(s, len(candidates)):
-                c = candidates[i]
                 # 场景一：当前数字恰好填满剩余值，找到一个有效组合
-                if c == remain:
-                    ans.append(use + [c])
+                if candidates[i] == remain:
+                    ans.append(use + [candidates[i]])
                 # 场景二：当前数字小于剩余值，路径有效，继续深入探索
                 # 传入的下一轮起始索引依然是 i，表示当前数字可以被无限制重复选取
-                if c < remain:
-                    find(i, use + [c], remain - c)
+                if candidates[i] < remain:
+                    find(i, use + [candidates[i]], remain - candidates[i])
                 # 场景三：当前数字已经大于剩余值，直接触发剪枝
                 # 因为数组已排序，当前数字超标，其右侧的数字必然全部超标，直接结束本层循环
-                if c > remain:
+                if candidates[i] > remain:
                     return
         # 4. 触发首次探索：从索引 0 开始，已选列表为空，剩余值为初始 target
         find(0, [], target)
